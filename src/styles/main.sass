@@ -1,0 +1,74 @@
+
+
+@import 'helpers/_helpers'
+@import 'helpers/_mixins' 
+@import 'helpers/_reset'
+@import 'helpers/_variables' 
+
+
+html
+  position: relative
+  box-sizing: border-box
+  min-height: 100%
+
+*,	*::before, *::after
+  box-sizing: inherit
+::-ms-clear
+  display: none
+*
+  &:focus, &:visited, &:active, &:hover
+    outline: 0 !important
+  &::-moz-focus-inner
+    border: 0
+body
+  font-family: $default-font
+  font-size: 16px
+  line-height: 1
+  overflow-x: hidden 
+
+h1 
+  font-size: 50px  
+  +lg 
+    font-size: 42px 
+
+  +sm 
+    size: 30px
+
+h2 
+  font-size: 42px  
+  +sm 
+    font-size: 22px 
+
+
+h3 
+  font-size: 26px 
+
+h4 
+  font-size: 22px 
+   
+h5 
+  font-family: $secondary-font  
+  font-weight: 400 
+  font-size: 18px
+  +sm 
+    16px 
+
+
+p
+  font-family: $secondary-font  
+  font-weight: 400 
+   
+
+.p1 
+  font-size: 18px 
+
+.p2 
+  font-size: 16px 
+
+.p3 
+  font-size: 14px 
+
+
+.wrapper 
+  max-width: 1170px 
+  margin: 0 auto 
