@@ -1,21 +1,18 @@
-import React, { Component } from "react";
-import Navigation from "./Navigation";
-import UserInfo from "./User-info";
-import Logo from "./Logo";
-import { Container } from "reactstrap";
+import React from 'react';
+import { Container } from 'reactstrap'; 
+import '../styles/main.sass';
+import Navigation from './Navigation';
+import UserInfo from './User-info';
+import Logo from './Logo';
 
-import "../styles/main.sass";
+const Header = () => (
+  <Container>
+    <header className="header">
+      <Logo />
+      <Navigation />
+      <UserInfo />
+    </header>
+  </Container>
+);
 
-export default class Header extends Component {
-  render() {
-    return (
-      <Container>
-        <header className="header">
-          <Logo />
-          <Navigation />
-          <UserInfo />
-        </header>
-      </Container>
-    );
-  }
-}
+export default Header;

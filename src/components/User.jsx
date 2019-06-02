@@ -1,22 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-export default class User extends Component { 
+const User = ({ photo, name, position, email, phone, id }) => (
+  <div className="user" key={id}>
+    <div className="user_avatar">
+      <img src={photo} alt="avatar" />
+    </div>
+    <h3>{name}</h3>
+    <div className="user_info">
+      <p className="user_position">{position}</p>
+      <p className="user_mail">{email}</p>
+      <p className="user_phone">{phone}</p>
+    </div>
+  </div>
+);
 
-  render() { 
-    const { avatar } = this.props;
-    
-    return (
-      <div className='user'>
-        <div className="user-avatar">
-          <img src={avatar} alt="avatar" />
-        </div> 
-        <div className="user-name">
-          { this.props.name }
-        </div> 
-        <div className="user-info">
-          { this.props.info }
-        </div>
-      </div>
-    )
-  }
-}
+export default User;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import "../styles/main.sass";
+import '../styles/main.sass';
 
 import requirementsimg from '../imgs/requirementsimg.png';
 
@@ -28,9 +28,9 @@ const Requirements = () => {
               UX metrics as experienced by Chrome users under real-world
               conditions.
             </p>
-          </Col> 
+          </Col>
           <Col lg={{ size: '4', offset: '1' }}>
-            <img src={requirementsimg} alt="requirementsimg"/>
+            <img src={requirementsimg} alt="requirementsimg" />
           </Col>
         </Row>
       </Container>
