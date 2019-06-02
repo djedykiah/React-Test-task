@@ -1,7 +1,8 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import './Requirements.sass';
-import requirementsimg from '../../imgs/requirementsimg.png';
+import "../styles/main.sass";
+
+import requirementsimg from '../imgs/requirementsimg.png';
 
 const Requirements = () => {
   return (

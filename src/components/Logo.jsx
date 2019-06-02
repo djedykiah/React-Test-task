@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
-import './Logo.sass';
-import logo from '../../logo.svg';
+import "../styles/main.sass";
+
+import logo from '../logo.svg';
 
 export default class Logo extends Component {
   render() {

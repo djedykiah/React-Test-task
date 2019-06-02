@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Navigation from "../Navigation/Navigation";
-import User from "../User/User";
-import Logo from "../Logo/Logo";
+import Navigation from "./Navigation";
+import UserInfo from "./User-info";
+import Logo from "./Logo";
 import { Container } from "reactstrap";
 
-import "./Header.sass";
+import "../styles/main.sass";
 
 export default class Header extends Component {
   render() {
@@ -13,7 +13,7 @@ export default class Header extends Component {
         <header className="header">
           <Logo />
           <Navigation />
-          <User />
+          <UserInfo />
         </header>
       </Container>
     );

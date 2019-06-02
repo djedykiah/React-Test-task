@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import "./About.sass";
-import aboutimg from "../../imgs/about-img.png";
-import html from "../../imgs/html.svg";
-import css from "../../imgs/css.svg";
-import javascript from "../../imgs/javascript.svg";
+import '../styles/main.sass';
+
+import aboutimg from '../imgs/about-img.png';
+import html from '../imgs/html.svg';
+import css from '../imgs/css.svg';
+import javascript from '../imgs/javascript.svg';
 
 const About = () => {
   return (

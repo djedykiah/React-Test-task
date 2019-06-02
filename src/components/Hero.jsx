@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Container, Col } from 'reactstrap';
-import './Hero.sass';
+import "../styles/main.sass";
+
 
 const Hero = () => {
   return (

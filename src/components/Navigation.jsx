@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './Navigation.sass';
+import "../styles/main.sass";
+
 
 export default class Navigation extends Component {
   render() {

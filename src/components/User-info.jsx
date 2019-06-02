@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import userPhoto from '../../imgs/user-superstar-2x.jpg';
-import iconSignout from '../../icons/sign-out.svg';
-import './User.sass'; 
+import userPhoto from '../imgs/user-superstar-2x.jpg';
+import iconSignout from '../icons/sign-out.svg';
+import "../styles/main.sass";
+
 
 export default class User extends Component {
   render() {

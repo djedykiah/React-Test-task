@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import Header from '../Header/Header';
-import Hero from '../Hero/Hero';
-import About from '../About/About'
-import Requirements from '../Requirements/Requirements';
+import Header from './Header';
+import Hero from './Hero';
+import About from './About';
+import Requirements from './Requirements';
+import Users from './Users';
+
 export default class App extends Component {
   render() {
     return (
@@ -10,7 +12,8 @@ export default class App extends Component {
         <Header /> 
         <Hero /> 
         <About /> 
-        <Requirements />
+        <Requirements /> 
+        <Users />
       </div>
     )
   }

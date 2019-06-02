@@ -1,4 +1,4 @@
-@import '../../styles/helpers/_variables'
+
 .user
   display: flex 
   align-items: center 
@@ -10,7 +10,7 @@
     font-size: 14px 
     font-weight: 400  
 
-  &_mail 
+  &_mail, &_position, &_phone 
     font-family: $secondary-font 
     font-size: 12px 
     font-weight: 400  
@@ -24,4 +24,25 @@
       width: 40px 
       height: 40px 
 
-      border-radius: 50% 
+      border-radius: 50%  
+
+
+.users 
+  .user 
+    display: flex  
+    align-items: flex-start
+    flex-direction: column
+    margin-bottom: 60px 
+    padding-left: 50px
+
+    position: relative   
+
+    &_info
+
+      text-align: left
+
+   
+
+    h3 
+      margin-bottom: 20px
+  
