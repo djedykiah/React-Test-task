@@ -1,57 +1,47 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import '../styles/main.sass';
 import User from './User';
+import { USERS_LIST } from '../constants';
+import getUrl from '../helpers/getUrl';
 
 export default class Users extends Component {
   state = {
     users: [],
-    links: {}
+    links: {},
   };
 
   componentDidMount() {
-    this.getUsers();   
-  } 
+    this.getUsers();
+  }
 
 
   getUsers = () => {
-    fetch(
-      'https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6',  
-    )
-      .then(response => response.json())
+    getUrl(USERS_LIST)
       .then((response) => {
         this.setState({ users: response.users, links: response.links });
-      }) 
+      });
+  }
 
-
-  };  
 
   getNextUsers = () => {
-    fetch(
-      this.state.links.next_url,
-    ) 
-    .then(response => response.json()) 
-    .then((response) => {
-      const newUsers = response.users; 
-        this.setState(({ users }) => {
-          const plusUsers = [
+    const { next_url: nextUsers } = this.state.links;
+    getUrl(nextUsers)
+      .then((response) => {
+        this.setState(({ users }) => ({
+          users: [
             ...users,
-            ...newUsers,
-          ] 
-
-          return {
-            users: plusUsers, 
-            links: response.links
-          };
-        });
-    }) 
+            ...response.users,
+          ],
+          links: response.links,
+        }));
+      });
   }
 
 
   render() {
-
-
-    const buttonVisibility = this.state.links.next_url === null ? 'hidden' : 'visible';
+    const { next_url: nextUrl } = this.state.links;
+    const { users } = this.state;
+    const buttonVisibility = nextUrl ? 'visible' : 'hidden';
 
     return (
       <div className="users">
@@ -59,15 +49,29 @@ export default class Users extends Component {
         <p className="under-title">Attention! Sorting users by registration date</p>
         <Container>
           <Row>
-            {this.state.users.map(function (item, index) {
+            {users.map((item) => {
+              const {
+                id,
+                photo,
+                name,
+                position,
+                email,
+                phone,
+              } = item;
               return (
-                <Col lg="4">
-                  <User key={item.id} photo={item.photo} name={item.name} position={item.position} email={item.email} phone={item.phone} />
+                <Col lg="4" key={id}>
+                  <User
+                    photo={photo}
+                    name={name}
+                    position={position}
+                    email={email}
+                    phone={phone}
+                  />
                 </Col>
               );
             })}
           </Row>
-          <button type="button" onClick={ this.getNextUsers } className={`btn btn-more ${buttonVisibility}`}>
+          <button type="button" onClick={this.getNextUsers} className={`btn btn-more ${buttonVisibility}`}>
             Show more
           </button>
         </Container>

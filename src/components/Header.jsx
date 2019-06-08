@@ -1,16 +1,17 @@
 import React from 'react';
-import { Container } from 'reactstrap'; 
-import '../styles/main.sass';
+import { Container } from 'reactstrap';
 import Navigation from './Navigation';
-import UserInfo from './User-info';
-import Logo from './Logo';
+import LoggedUser from './LoggedUser';
+import logo from '../logo.svg';
 
 const Header = () => (
   <Container>
     <header className="header">
-      <Logo />
+      <div className="logo">
+        <img src={logo} alt="logo" />
+      </div>
       <Navigation />
-      <UserInfo />
+      <LoggedUser />
     </header>
   </Container>
 );

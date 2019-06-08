@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Container, Col } from 'reactstrap';
-import '../styles/main.sass';
 
 const Hero = () => (
   <div className="hero">

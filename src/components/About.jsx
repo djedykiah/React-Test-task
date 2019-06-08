@@ -1,11 +1,10 @@
-import React from "react";
-import { Container, Row, Col } from "reactstrap";
-import "../styles/main.sass";
+import React from 'react';
+import { Container, Row, Col } from 'reactstrap';
 
-import aboutimg from "../imgs/about-img.png";
-import html from "../imgs/html.svg";
-import css from "../imgs/css.svg";
-import javascript from "../imgs/javascript.svg";
+import aboutimg from '../imgs/about-img.png';
+import htmlSvg from '../imgs/html.svg';
+import cssSvg from '../imgs/css.svg';
+import javascriptSvg from '../imgs/javascript.svg';
 
 const About = () => (
   <div className="about">
@@ -35,7 +34,7 @@ const About = () => (
     <Container className="about-second">
       <Row>
         <Col lg="4">
-          <img src={html} alt="html" />
+          <img src={htmlSvg} alt="html" />
           <h3>I'm in love with HTML</h3>
           <p>
             Hypertext Markup Language (HTML) is the standard markup language for
@@ -43,7 +42,7 @@ const About = () => (
           </p>
         </Col>
         <Col lg="4">
-          <img src={css} alt="css" />
+          <img src={cssSvg} alt="css" />
 
           <h3>CSS is my best friend</h3>
           <p>
@@ -53,7 +52,7 @@ const About = () => (
           </p>
         </Col>
         <Col lg="4">
-          <img src={javascript} alt="javascript" />
+          <img src={javascriptSvg} alt="javascript" />
 
           <h3>JavaScript is my passion</h3>
           <p>

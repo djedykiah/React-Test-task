@@ -1,7 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const User = ({ photo, name, position, email, phone, id }) => (
-  <div className="user" key={id}>
+const propTypes = {
+  photo: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  position: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+};
+
+const User = ({
+  photo,
+  name,
+  position,
+  email,
+  phone,
+}) => (
+  <div className="user">
     <div className="user_avatar">
       <img src={photo} alt="avatar" />
     </div>
@@ -12,6 +27,9 @@ const User = ({ photo, name, position, email, phone, id }) => (
       <p className="user_phone">{phone}</p>
     </div>
   </div>
-);
+); 
+
+
+User.propTypes = propTypes;
 
 export default User;

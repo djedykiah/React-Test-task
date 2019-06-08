@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import '../styles/main.sass';
 
 import requirementsimg from '../imgs/requirementsimg.png';
 
