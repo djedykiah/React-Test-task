@@ -1,0 +1,40 @@
+input, select 
+  border-radius: 4px 
+  border: 1px solid #b7b7b7
+  height: 56px 
+  width: 100% 
+  padding: 0 10px 
+  +placeholder 
+    font-size: 16px 
+    font-weight: 400  
+    color: #8d8c8c 
+    font-family: $secondary-font 
+
+label 
+  width: 100% 
+  margin-bottom: 20px 
+
+
+.name-label, .email-label, .phone-label 
+  position: relative 
+  &:before 
+    content: '' 
+    position: absolute 
+    top: -5px 
+    left: 20px 
+    padding: 0 3px 
+    color: #8d8c8c
+    font-size: 12px 
+    font-weight: 400 
+    font-family: $secondary-font 
+    background-color: #fff 
+
+.name-label
+  &:before 
+    content: 'Name' 
+.email-label
+  &:before
+    content: 'Email'
+.phone-label
+  &:before
+    content: 'Phone'
