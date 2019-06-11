@@ -4,7 +4,7 @@ import Hero from './Hero';
 import About from './About';
 import Requirements from './Requirements';
 import Users from './Users';
-import Register from './Register';
+import Registration from './Registration';
 
 const App = () => (
   <div className="wrapper">
@@ -13,7 +13,7 @@ const App = () => (
     <About />
     <Requirements />
     <Users />
-    <Register />
+    <Registration />
   </div>
 );
 

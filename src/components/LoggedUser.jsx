@@ -13,7 +13,7 @@ class LoggedUser extends Component {
   }
 
   getLoggedUser = () => {
-    getUrl(`${API}users/2`)
+    getUrl(`${API}/users/2`)
       .then((response) => {
         this.setState({ user: response.user });
       });

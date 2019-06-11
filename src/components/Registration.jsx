@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import { API } from '../constants';
+import { API, POSITIONS } from '../constants';
 import getUrl from '../helpers/getUrl';
 
 export default class Register extends Component {
@@ -11,7 +11,6 @@ export default class Register extends Component {
     phone: '',
     position: '',
     photo: '',
-    token: '',
   };
 
   componentDidMount() {
@@ -19,10 +18,20 @@ export default class Register extends Component {
   }
 
   getPositions = () => {
-    getUrl(`${API}positions`).then((response) => {
+    getUrl(POSITIONS).then((response) => {
       this.setState({ positions: response.positions });
     });
   };
+
+  registrationRequest = (token, data) => (
+    fetch(`${API}/users`, {
+      method: 'POST',
+      body: data,
+      headers: {
+        Token: token,
+      },
+    })
+  );
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +40,6 @@ export default class Register extends Component {
       email,
       phone,
       position,
-      token,
     } = this.state;
 
     const formData = new FormData();
@@ -43,28 +51,10 @@ export default class Register extends Component {
     formData.append('phone', phone);
     formData.append('photo', fileField.files[0]);
 
-    fetch(`${API}token`)
-      .then(res => res.json())
-      .then(response => this.setState({ token: response.token }));
-
-    fetch(`${API}users`, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        Token: token,
-      },
-    })
-      .then(res => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.success) {
-          console.log('success');
-        } else {
-          console.log('wrong');
-        }
-      })
-      .catch((error) => {
-        console.log('error');
+    getUrl(`${API}/token`)
+      .then(({ token }) => {
+        this.registrationRequest(token, formData)
+          .then(response => console.log(response));
       });
   };
 

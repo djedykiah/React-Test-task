@@ -1,10 +1,6 @@
-const getUrl = (url) => {
-  return (
-    fetch(
-      url,
-    )
-      .then(response => response.json())
-  );
-};
+const getUrl = (url, params = {}) => (
+  fetch(url, params)
+    .then(response => response.json())
+);
 
 export default getUrl;
