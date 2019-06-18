@@ -5,6 +5,7 @@ import About from './About';
 import Requirements from './Requirements';
 import Users from './Users';
 import Registration from './Registration';
+import Modal from './Modal';
 
 const App = () => (
   <div className="wrapper">

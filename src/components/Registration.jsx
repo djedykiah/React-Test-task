@@ -1,26 +1,45 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
+import InputMask from 'react-input-mask';
 import { API, POSITIONS } from '../constants';
 import FormErrors from './FormErrors';
-import getUrl from '../helpers/getUrl';
-import InputMask from 'react-input-mask';
+import getUrl from '../helpers/getUrl'; 
+import Modal from './Modal';
 
 export default class Register extends Component {
   state = {
     positions: [],
-    name: '',
-    email: '',
-    phone: '',
-    position: '',
-    photo: '',
-    formErrors: { name: '', email: '', photo: '' },
-    nameValid: false,
-    emailValid: false,
-    formValid: false,
+    modal: false,
+    values: {
+      name: '',
+      email: '',
+      phone: '',
+      position: '',
+      photo: '',
+    },
+    errors: {
+      name: '',
+      email: '',
+      photo: '',
+      position: '',
+    },
+    valid: {
+      name: false,
+      email: false,
+      form: false,
+    },
   };
 
   componentDidMount() {
     this.getPositions();
+  }
+
+  openModal = () => {
+    this.setState({ modal: true });
+  }
+
+  closeModal = () => {
+    this.setState({ modal: false })
   }
 
   getPositions = () => {
@@ -44,9 +63,10 @@ export default class Register extends Component {
     const {
       name,
       email,
-      phone,
       position,
-    } = this.state;
+    } = this.state.values;
+    let { phone } = this.state.values;
+    phone = `+${phone.replace(/[^\d]/g, '')}`;
 
     const formData = new FormData();
     const fileField = document.querySelector('input[type="file"]');
@@ -59,64 +79,92 @@ export default class Register extends Component {
 
     getUrl(`${API}/token`)
       .then(({ token }) => {
-        this.registrationRequest(token, formData);
+        this.registrationRequest(token, formData)
+          .then(response => response.json())
+          .then((response) => {
+            if (response.success) {
+              this.openModal(response.message);
+            }
+          })
+          .catch((error) => {
+            throw new Error(error);
+          });
       });
   };
 
   onChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value,
+    const { id, value } = e.target;
+    this.setState((prevState) => {
+      const valuesCopy = { ...prevState.values };
+      valuesCopy[id] = value;
+      return { values: valuesCopy };
     });
   };
 
-  handleUserInput = (e) => { 
+  handleUserInput = (e) => {
     const { name, value } = e.target;
     this.validateField(name, value);
   }
 
-  errorClass = (error) => {
-    return error.length === 0 ? '' : 'has-error';
-  };
+  errorClass = error => (
+    error.length === 0 ? '' : 'has-error'
+  )
+
+  emailValidation = (content) => {
+    if (
+      content.match(/^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/i)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+
+  validateForm = () => {
+    this.setState((prevState) => {
+      const validCopy = { ...prevState.valid };
+      validCopy.form = validCopy.email && validCopy.name;
+      return { valid: validCopy };
+    });
+  }
 
   validateField(fieldName, value) {
-    const { formErrors: fieldValidationErrors } = this.state;
-    let { emailValid, nameValid } = this.state;
+    const { errors, valid } = this.state;
     switch (fieldName) {
       case 'email':
-        emailValid = value.match(/^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/i);
-        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+        valid[fieldName] = this.emailValidation(value);
+        errors[fieldName] = valid[fieldName] ? '' : ' is invalid';
         break;
       case 'name':
-        nameValid = value.length >= 2 && value.length <= 60;
-        fieldValidationErrors.name = nameValid ? '' : ' is invalid';
+        valid[fieldName] = value.length >= 2 && value.length <= 60;
+        errors[fieldName] = valid[fieldName] ? '' : ' is invalid';
         break;
       default:
         break;
     }
     this.setState({
-      formErrors: fieldValidationErrors,
-      emailValid,
-      nameValid,
+      errors,
+      valid,
     }, this.validateForm);
-  }
-
-  validateForm() {
-    this.setState({
-      formValid: this.state.emailValid && this.state.nameValid
-    });
   }
 
   render() {
     const {
-      positions,
       name,
       photo,
       email,
       phone,
-    } = this.state;
+    } = this.state.values;
+    const { positions } = this.state;
+    const { form } = this.state.valid;
+    const disabledBtn = !form ? 'disabled' : '';
+    const modal = this.state.modal ? (
+      <Modal onClose={this.closeModal} />
+    ) : null;
     return (
       <div className="register">
-        <h1>Register to get work</h1>
+        { modal }
+        <h1 onClick={this.openModal}>Register to get work</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente,
           dolore?
@@ -133,8 +181,8 @@ export default class Register extends Component {
                     placeholder="Your name"
                     value={name}
                     onChange={this.onChange}
-                    onBlur={this.handleUserInput} 
-                    className={`${this.errorClass(this.state.formErrors.name)}`}
+                    onBlur={this.handleUserInput}
+                    className={`${this.errorClass(this.state.errors.name)}`}
                   />
                 </label>
               </Col>
@@ -148,12 +196,12 @@ export default class Register extends Component {
                     value={email}
                     onChange={this.onChange}
                     onBlur={this.handleUserInput}
-                    className={`${this.errorClass(this.state.formErrors.email)}`}
+                    className={`${this.errorClass(this.state.errors.email)}`}
                   />
                 </label>
               </Col>
               <Col lg="4">
-                <label htmlFor="phone" className="phone-label">
+                <div className="phone-label">
                   <InputMask
                     mask="+380 99 999 99 99"
                     value={phone}
@@ -163,7 +211,7 @@ export default class Register extends Component {
                     maskChar=" "
                     onChange={this.onChange}
                   />
-                </label>
+                </div>
               </Col>
               <Col lg="6">
                 <select name="positions" id="position" onChange={this.onChange}>
@@ -188,12 +236,12 @@ export default class Register extends Component {
               </Col>
             </Row>
           </Container>
-          <button type="submit" className="btn">
+          <button type="submit" className={`btn ${disabledBtn}`} disabled={`${disabledBtn}`}>
             Sign In
           </button>
-        </form> 
+        </form>
         <div className="panel panel-default">
-          <FormErrors formErrors={this.state.formErrors} />
+          <FormErrors formErrors={this.state.errors} />
         </div>
       </div>
     );

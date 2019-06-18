@@ -17,8 +17,8 @@ export default class Users extends Component {
 
   getUsers = () => {
     getUrl(USERS_LIST)
-      .then((response) => {
-        this.setState({ users: response.users, links: response.links });
+      .then(({ users, links }) => {
+        this.setState({ users, links });
       });
   }
 
